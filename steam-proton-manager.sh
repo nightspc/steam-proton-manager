@@ -67,13 +67,13 @@ install() {
 	cp -ar "${SYSTEM_DEPLOY_DIR}/${VERSION}/*" "${PROTON_DIR}"
 	mkdir -p "${PROTON_PREFIX}"
 	WINEPREFIX="${PROTON_PREFIX}" wineboot-"${WINE_VERSION}" && \
-		WINEPREFIX="${PROTON_PREFIX}" wineserver="${WINE_VERSION}" -w && \
+		WINEPREFIX="${PROTON_PREFIX}" wineserver-"${WINE_VERSION}" -w && \
 		ln -s "${LIBERATION_FONT_DIR}"/LiberationSans-Regular.ttf "${PROTON_PREFIX}"/drive_c/windows/Fonts/arial.ttf && \
 		ln -s "${LIBERATION_FONT_DIR}"/LiberationSans-Bold.ttf "${PROTON_PREFIX}"/drive_c/windows/Fonts/arialbd.ttf && \
 		ln -s "${LIBERATION_FONT_DIR}"/LiberationSerif-Regular.ttf "${PROTON_PREFIX}"/drive_c/windows/Fonts/times.ttf && \
 		ln -s "${LIBERATION_FONT_DIR}"/LiberationMono-Regular.ttf "${PROTON_PREFIX}"/drive_c/windows/Fonts/cour.ttf && \
-		WINEPREFIX="${PROTON_PREFIX}" /usr/lib32/dxvk/bin/setup_dxvk.sh && \
-		WINEPREFIX="${PROTON_PREFIX}" /usr/lib64/dxvk/bin/setup_dxvk.sh
+		WINEPREFIX="${PROTON_PREFIX}" /usr/lib32/dxvk/bin/setup_dxvk.sh install && \
+		WINEPREFIX="${PROTON_PREFIX}" /usr/lib64/dxvk/bin/setup_dxvk.sh install
 	echo "Installed Proton to ${PROTON_DIR} using wine-${WINE_VERSION}"
 	echo "You may need to restart Steam to select this tool"
 }
@@ -91,7 +91,7 @@ remove() {
 WINE_CHECK=0
 
 for opt in "$@"; do
-	if [ ${WINE_CHECK}=1 ]; then
+	if [ ${WINE_CHECK} = 1 ]; then
 		WINE_VERSION="${opt}"
 		check_wine || (echo >&2 "!! Wine version wine-${WINE_VERSION} not found"; exit 1)
 		WINE_CHECK=0
@@ -128,4 +128,3 @@ else
 	echo >&2 "error: Please specify an action"
 	exit 1
 fi
-
