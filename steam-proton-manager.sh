@@ -64,7 +64,7 @@ install() {
 		return 1
 	fi
 	mkdir -p "${PROTON_DIR}"
-	cp -ar "${SYSTEM_DEPLOY_DIR}/${VERSION}/*" "${PROTON_DIR}"
+	cp -ar "${SYSTEM_DEPLOY_DIR}"/"${VERSION}"/* "${PROTON_DIR}"
 	mkdir -p "${PROTON_PREFIX}"
 	WINEPREFIX="${PROTON_PREFIX}" wineboot-"${WINE_VERSION}" && \
 		WINEPREFIX="${PROTON_PREFIX}" wineserver-"${WINE_VERSION}" -w && \
