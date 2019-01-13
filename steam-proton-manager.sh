@@ -47,11 +47,11 @@ list_versions() {
 }
 
 check_version() {
-	echo "${VERSION_LIST}" | grep --quiet "${VERSION}"
+	echo "${VERSION_LIST}" | grep -w --quiet "${VERSION}"
 }
 
 check_wine() {
-	echo "${WINE_LIST}" | grep --quiet "wine-${WINE_VERSION}"
+	echo "${WINE_LIST}" | grep -w --quiet "wine-${WINE_VERSION}"
 }
 
 patch_proton() {
@@ -88,11 +88,13 @@ remove() {
 	echo "You may need to restart Steam update the available tools"
 }
 
+WINE_CHECK=0
+
 for opt in "$@"; do
-	if ! [ -z "${WINE_CHECK}" ]; then
+	if [ ${WINE_CHECK}=1 ]; then
 		WINE_VERSION="${opt}"
-		check_wine || echo >&2 "!! Wine version wine-${WINE_VERSION} not found"; exit 1
-		WINE_CHECK=""
+		check_wine || (echo >&2 "!! Wine version wine-${WINE_VERSION} not found"; exit 1)
+		WINE_CHECK=0
 	elif [ "${opt}" = "-h" ] || [ "${opt}" = "--help" ]; then
 		usage
 		exit 0
