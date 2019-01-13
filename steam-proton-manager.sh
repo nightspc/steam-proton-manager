@@ -8,7 +8,7 @@ LIBERATION_FONT_DIR="${SYSTEM_PREFIX}"/share/fonts/liberation-fonts
 COMPAT_DIR="${STEAM_DIR}/compatibilitytools.d"
 
 VERSION_LIST=$(ls -1 "${SYSTEM_DEPLOY_DIR}")
-WINE_LIST=$(ls -1 "${SYSTEM_PREFIX}/include/wine-*" | sed 's/wine-//')
+WINE_LIST=$(ls -1 "${SYSTEM_PREFIX}/include/" | grep "wine-")
 VERSION=$("${VERSION_LIST}" | tail -n1)
 WINE_VERSION="proton"
 
